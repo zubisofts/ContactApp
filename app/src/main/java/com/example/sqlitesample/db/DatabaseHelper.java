@@ -23,7 +23,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String ADDRESS = "address";
 
     public DatabaseHelper(@Nullable Context context) {
-        super(context, DB_NAME, null, 1);
+        super(context, DB_NAME, null, 3);
     }
 
     @Override
@@ -40,16 +40,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-//        db.execSQL("DROP TABLE " + TABLE_NAME);
-//        db.execSQL(
-//                "CREATE TABLE " + TABLE_NAME + " (" +
-//                        ID + " INTEGER PRIMARY KEY AUTOINCREMENT ," +
-//                        NAME + " VARCHAR, " +
-//                        PHONE + " VARCHAR," +
-//                        EMAIL + " VARCHAR," +
-//                        ADDRESS + " VARCHAR" + ")"
-//        );
 
+//        Check the old version of database and make the necessary updates
         if (oldVersion <  2) {
             upgradeVersion2(db);
 
@@ -65,6 +57,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     private void upgradeVersion2(SQLiteDatabase db) {
+
+//        Here I simply retrieved the old data from database and
+//        re-inserted/updated the new database tables due to the the upgrade.
+//        This is to make sure that the previous data is not lost.
 
         String query="Select * from "+TABLE_NAME;
 
